@@ -1,0 +1,33 @@
+name: coverage-check
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Monday morning, so a middleware merged during the week is caught once.
+    - cron: '17 6 * * 1'
+  pull_request:
+    paths:
+      - "README.md"
+      - ".github/scripts/check-middleware-coverage.sh"
+      - ".github/workflows/coverage-check.yml"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  middlewares:
+    runs-on: blacksmith-2vcpu-ubuntu-2404
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Check middleware coverage
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: bash .github/scripts/check-middleware-coverage.sh
