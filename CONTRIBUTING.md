@@ -15,6 +15,8 @@
 
 Please contribute links to packages/projects you have used or are familiar with. This will help ensure high-quality entries.
 
+The Core and Contrib sections are not maintained by hand alone: a weekly workflow compares them against the middlewares that actually exist in [gofiber/fiber](https://github.com/gofiber/fiber/tree/main/middleware) and [gofiber/contrib](https://github.com/gofiber/contrib/tree/main/v3), and fails when one is missing here. Run it yourself with `bash .github/scripts/check-middleware-coverage.sh`. Third-party entries stay a pull request away, since nothing can discover them automatically.
+
 
 ## Quality standards
 
